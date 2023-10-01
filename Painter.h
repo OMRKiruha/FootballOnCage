@@ -20,7 +20,7 @@ class Painter {
      * @param radius радиус круга
      * @param color цвет заливки
      */
-    void draw(const Point& center, double radius, const Color& color);
+    void draw(const Point& center, double radius, const sf::Color &color);
     /**
      * Рисует прямоугольник цвета color
      * @param topLeft координата верхнего левого угла
@@ -28,7 +28,7 @@ class Painter {
      * @param color цвет заливки
      */
     void draw(const Point& topLeft, const Point& bottomRight,
-              const Color& color);
+              const sf::Color &color);
 
   private:
     std::unique_ptr<PainterImpl> impl;

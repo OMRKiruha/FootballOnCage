@@ -40,10 +40,10 @@ class Velocity {
      * @brief Возвращает точку конца вектора
      * @return
      */
-    inline Point vector() const {
+    [[nodiscard]] inline Point vector() const {
         return vec;
     }
 
   private:
-    Point vec;
+    Point vec{};
 };

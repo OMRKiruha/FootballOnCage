@@ -8,11 +8,11 @@ class World;
 
 class Application {
   public:
-    Application(const char* name);
+    Application(std::string_view name);
     void run(World& world);
 
   private:
-    void processEvents();
+    void processEvents(World& world);
     void updateWorld(World& world);
     void drawWorld(const World& world);
 

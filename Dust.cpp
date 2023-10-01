@@ -9,7 +9,7 @@ Dust::Dust(const Point& center) {
     double radius = 5.;
     m_center = center;
     double startVelocity = 50.;
-    Color color{0, 0, 0};
+    sf::Color color{0, 0, 0, 255};
     bool isCollidable = false;
     // Заполняем вектор шарами
     // Начальная точка center

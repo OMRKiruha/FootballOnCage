@@ -13,7 +13,7 @@ PainterImpl::~PainterImpl() {
     window.display();
 }
 
-void PainterImpl::draw(const Point& center, double radius, const Color& color) {
+void PainterImpl::draw(const Point& center, double radius, const sf::Color &color) {
     const sf::Vector2f pos = toVector(view.toScreen(center));
     const float scaledRadius = float(radius * view.scale());
     // Эмпирическая формула. При таком количестве точек получаем гладкие
@@ -22,34 +22,23 @@ void PainterImpl::draw(const Point& center, double radius, const Color& color) {
 
     sf::CircleShape shape(scaledRadius, pointsCount);
     shape.setPosition(pos - sf::Vector2f{scaledRadius, scaledRadius});
-    shape.setFillColor(toSFMLColor(color));
+    shape.setFillColor(color);
 
     window.draw(shape);
 }
 
 void PainterImpl::draw(const Point& topLeft, const Point& bottomRight,
-                       const Color& color) {
+                       const sf::Color &color) {
     const sf::Vector2f tl = toVector(view.toScreen(topLeft));
     const sf::Vector2f br = toVector(view.toScreen(bottomRight));
 
     sf::RectangleShape rect(br - tl);
     rect.setPosition(tl);
-    rect.setFillColor(toSFMLColor(color));
+    rect.setFillColor(color);
 
     window.draw(rect);
 }
 
-sf::Color PainterImpl::toSFMLColor(const Color& color) const {
-    auto toColorComponent = [](double value) {
-        return sf::Uint8(std::clamp(value, 0., 1.) * 255);
-    };
-
-    return sf::Color{
-        toColorComponent(color.red()),
-        toColorComponent(color.green()),
-        toColorComponent(color.blue()),
-    };
-}
 
 sf::Vector2f PainterImpl::toVector(const Point& point) const {
     return {float(point.x), float(point.y)};

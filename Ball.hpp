@@ -1,36 +1,43 @@
 #pragma once
+
+#include <SFML/Graphics/Color.hpp>
 #include "Painter.h"
 #include "Point.h"
 #include "Velocity.h"
 
+
 class Ball {
-  public:
+public:
     Ball() = default;
 
-    Ball(double radius, Point center, Velocity velocity, Color color,
+    Ball(double radius, Point center, Velocity velocity, sf::Color color,
          bool isCollidable);
 
     ~Ball() = default;
 
-    void setVelocity(const Velocity& velocity);
-    Velocity getVelocity() const;
+    void setVelocity(const Velocity &velocity) { m_velocity = velocity; };
+    [[nodiscard]] Velocity getVelocity() const { return {m_velocity}; };
 
-    void draw(Painter& painter) const;
+    void draw(Painter &painter) const;
 
-    void setCenter(const Point& center);
-    Point getCenter() const;
+    void setCenter(const Point &center) { m_center = center; };
+    [[nodiscard]] Point getCenter() const{ return m_center; };
 
-    double getRadius() const;
-    double getMass() const;
+    [[nodiscard]] double getRadius() const { return m_radius; };
 
-    static bool isCollidableBalls(Ball& one, Ball& other);
-    bool getCollidable();
+    [[nodiscard]] double getMass() const { return m_mass; };
 
-  private:
+    static bool isCollidableBalls(Ball &one, Ball &other);
+
+    [[nodiscard]] bool getCollidable() const { return m_isCollidable; };
+
+    void setColor(sf::Color color) { m_color = color; };
+
+private:
     double m_radius{};
     double m_mass{};
     Point m_center;
     Velocity m_velocity;
-    Color m_color;
+    sf::Color m_color;
     bool m_isCollidable{};
 };

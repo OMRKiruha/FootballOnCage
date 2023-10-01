@@ -4,11 +4,11 @@
 
 class Color {
   public:
-    Color();
+    Color() = default;
     Color(double red, double green, double blue);
-    double red() const;
-    double green() const;
-    double blue() const;
+    [[nodiscard]] double red() const { return r; };
+    [[nodiscard]] double green() const { return g; };
+    [[nodiscard]] double blue() const { return b; };
 
     void setColor(double red, double green, double blue);
 
@@ -18,11 +18,3 @@ class Color {
     double b{};
 };
 
-inline std::istream& operator>>(std::istream& is, Color& color){
-    double red;
-    double green;
-    double blue;
-    is >> red >> green >> blue;
-    color.setColor(red, green, blue);
-    return is;
-}

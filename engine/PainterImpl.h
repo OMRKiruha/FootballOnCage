@@ -12,9 +12,9 @@ class PainterImpl {
   public:
     PainterImpl(sf::RenderWindow& window, const View& view);
     ~PainterImpl();
-    void draw(const Point& center, double radius, const Color& color);
+    void draw(const Point& center, double radius, const sf::Color &color);
     void draw(const Point& topLeft, const Point& bottomRight,
-              const Color& color);
+              const sf::Color &color);
 
   private:
     sf::Color toSFMLColor(const Color& color) const;

@@ -1,12 +1,15 @@
-#include "Application.h"
-#include "../World.h"
-#include <SFML/Window/Event.hpp>
-#include <chrono>
-#include <map>
 
-Application::Application(const char* name)
+#include <chrono>
+
+#include <SFML/Window/Event.hpp>
+
+#include "../World.h"
+#include "Application.h"
+
+
+Application::Application(std::string_view name)
     : window{{1280u, 960u},
-             name,
+             name.data(),
              sf::Style::Titlebar | sf::Style::Close,
              sf::ContextSettings(0, 0, 4)},
       view({0., 0.}, 1280, 960, 0.2) {}
@@ -16,19 +19,41 @@ void Application::run(World& world) {
     totalTime = 0.;
 
     while (window.isOpen()) {
-        processEvents();
+        processEvents(world);
         updateWorld(world);
         drawWorld(world);
     }
 }
 
-void Application::processEvents() {
+void Application::processEvents(World& world) {
     for (sf::Event event{}; window.pollEvent(event); /**/) {
-        if (event.type == sf::Event::EventType::Closed) {
-            window.close();
-        } else if (event.type == sf::Event::EventType::MouseWheelScrolled) {
-            view.onZoom(event.mouseWheelScroll.delta);
+        switch (event.type) {
+            case sf::Event::EventType::Closed:
+                window.close();
+                break;
+            case sf::Event::EventType::TouchBegan:
+                world.showPointer();
+                break;
+            case sf::Event::EventType::TouchMoved:
+                world.setPointerXY(Point(event.touch.x, event.touch.y));
+                break;
+            case sf::Event::EventType::TouchEnded:
+                world.hidePointer();
+                break;
+            case sf::Event::EventType::MouseButtonPressed:
+                world.showPointer();
+                break;
+            case sf::Event::EventType::MouseMoved:
+                world.setPointerXY(Point(event.mouseMove.x, -event.mouseMove.y));
+                break;
+            case sf::Event::EventType::MouseButtonReleased:
+                world.hidePointer();
+                break;
+            case sf::Event::EventType::MouseWheelScrolled:
+                view.onZoom(event.mouseWheelScroll.delta);
+                break;
         }
+
     }
 }
 
