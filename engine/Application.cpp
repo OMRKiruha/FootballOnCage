@@ -8,11 +8,11 @@
 
 
 Application::Application(std::string_view name)
-    : window{{1280u, 960u},
+    : window{{3840u, 2160u},
              name.data(),
              sf::Style::Titlebar | sf::Style::Close,
              sf::ContextSettings(0, 0, 4)},
-      view({0., 0.}, 1280, 960, 0.2) {}
+      view({0., 0.}, 1980, 1080, 0.2) {}
 
 void Application::run(World& world) {
     time = std::chrono::system_clock::now();
@@ -35,7 +35,7 @@ void Application::processEvents(World& world) {
                 world.showPointer();
                 break;
             case sf::Event::EventType::TouchMoved:
-                world.setPointerXY(Point(event.touch.x, event.touch.y));
+                world.setPointerXY(sf::Vector2f(event.touch.x, event.touch.y));
                 break;
             case sf::Event::EventType::TouchEnded:
                 world.hidePointer();
@@ -44,7 +44,9 @@ void Application::processEvents(World& world) {
                 world.showPointer();
                 break;
             case sf::Event::EventType::MouseMoved:
-                world.setPointerXY(Point(event.mouseMove.x, -event.mouseMove.y));
+                world.setPointerXY(sf::Vector2f(event.mouseMove.x, event.mouseMove.y));
+                world.m_text.setPosition(event.mouseMove.x, event.mouseMove.y);
+                window.draw(world.m_text);
                 break;
             case sf::Event::EventType::MouseButtonReleased:
                 world.hidePointer();
@@ -52,8 +54,39 @@ void Application::processEvents(World& world) {
             case sf::Event::EventType::MouseWheelScrolled:
                 view.onZoom(event.mouseWheelScroll.delta);
                 break;
+            case sf::Event::Resized:
+                break;
+            case sf::Event::LostFocus:
+                break;
+            case sf::Event::GainedFocus:
+                break;
+            case sf::Event::TextEntered:
+                break;
+            case sf::Event::KeyPressed:
+                break;
+            case sf::Event::KeyReleased:
+                break;
+            case sf::Event::MouseWheelMoved:
+                break;
+            case sf::Event::MouseEntered:
+                break;
+            case sf::Event::MouseLeft:
+                break;
+            case sf::Event::JoystickButtonPressed:
+                break;
+            case sf::Event::JoystickButtonReleased:
+                break;
+            case sf::Event::JoystickMoved:
+                break;
+            case sf::Event::JoystickConnected:
+                break;
+            case sf::Event::JoystickDisconnected:
+                break;
+            case sf::Event::SensorChanged:
+                break;
+            case sf::Event::Count:
+                break;
         }
-
     }
 }
 
@@ -76,4 +109,5 @@ void Application::updateWorld(World& world) {
 void Application::drawWorld(const World& world) {
     Painter painter(window, view);
     world.show(painter);
+    window.draw(world.m_text);
 }

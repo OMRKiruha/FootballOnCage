@@ -3,9 +3,12 @@
 #include <list>
 #include <vector>
 
+#include <SFML/Graphics.hpp>
+
 #include "Ball.hpp"
 #include "Dust.h"
 #include "Physics.h"
+#include "Pointer.h"
 
 class Painter;
 
@@ -17,7 +20,8 @@ class World {
     void removeDust();
     void showPointer();
     void hidePointer();
-    void setPointerXY(Point coord);
+    void setPointerXY(sf::Vector2f coord);
+    sf::Text& getText();
 
   private:
     // Границы мира заданы углами прямоугольника
@@ -28,14 +32,16 @@ class World {
     Physics physics{};
 
     // Контейнер с шарами
-    std::vector<Ball> balls{};
+    std::vector<Ball> m_ballsArray{};
 
     // Контейнер со вспышками
     std::list<Dust> fireworks{};
 
     // Объект указателя мыши или пальца
-    Ball pointer;
-
+    Pointer pointer;
+public:
+    sf::Font m_font;//шрифт
+    sf::Text m_text;
     // Длина отрезка времени, который не был
     // учтен при прошлой симуляции. См. реализацию update
     double restTime{0.0};

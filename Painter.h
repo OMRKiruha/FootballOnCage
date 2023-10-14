@@ -1,35 +1,36 @@
 #pragma once
-#include "Color.h"
-#include "Point.h"
+
 #include <memory>
 
+#include <SFML/Graphics/Color.hpp>
+#include <SFML/System/Vector2.hpp>
+
+#include "engine/View.h"
+#include "Point.h"
+
+
 class View;
-class PainterImpl;
 
 namespace sf {
     class RenderWindow;
 }
 
 class Painter {
-  public:
-    Painter(sf::RenderWindow& window, const View& view);
-    ~Painter();
-    /**
-     * Рисует круг цвета color
-     * @param center центр круга
-     * @param radius радиус круга
-     * @param color цвет заливки
-     */
-    void draw(const Point& center, double radius, const sf::Color &color);
-    /**
-     * Рисует прямоугольник цвета color
-     * @param topLeft координата верхнего левого угла
-     * @param bottomRight координата нижнего правого угла
-     * @param color цвет заливки
-     */
-    void draw(const Point& topLeft, const Point& bottomRight,
-              const sf::Color &color);
+public:
+    Painter(sf::RenderWindow &window, const View &view);
 
-  private:
-    std::unique_ptr<PainterImpl> impl;
+    ~Painter();
+
+    void draw(const Point &center, double radius, const sf::Color &color);
+
+    void draw(const sf::Vector2f &pos, double radius, const sf::Color &color);
+
+    void draw(const Point &topLeft, const Point &bottomRight, const sf::Color &color);
+
+private:
+    static sf::Vector2f toVector(const Point &point);
+
+private:
+    sf::RenderWindow &window;
+    const View &view;
 };

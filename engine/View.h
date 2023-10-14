@@ -6,8 +6,8 @@ class View {
     View(const Point& viewPoint, double screenWidth, double screenHeight,
          double scale);
     void onZoom(double step);
-    Point toScreen(const Point& worldPos) const;
-    double scale() const;
+    [[nodiscard]] Point toScreen(const Point& worldPos) const;
+    [[nodiscard]] double scale() const;
 
   private:
     double zoomValue;

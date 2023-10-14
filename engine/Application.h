@@ -8,7 +8,7 @@ class World;
 
 class Application {
   public:
-    Application(std::string_view name);
+    explicit Application(std::string_view name);
     void run(World& world);
 
   private:

@@ -29,12 +29,11 @@ add_executable(football
         World.cpp
         Ball.cpp
         Physics.cpp
-        Color.cpp
         Painter.cpp
         engine/Application.cpp
         engine/View.cpp
-        engine/PainterImpl.cpp
-        Dust.cpp Dust.h)
+        Dust.cpp Dust.h
+        Pointer.cpp Pointer.h )
 
 target_link_libraries(football PRIVATE sfml-graphics)
 

@@ -1,6 +1,9 @@
-#include "World.h"
-#include "engine/Application.h"
+
 #include <iostream>
+
+#include "engine/Application.h"
+
+#include "World.h"
 
 int main(int argc, char* argv[]) {
 
